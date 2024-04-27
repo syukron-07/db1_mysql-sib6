@@ -1,0 +1,93 @@
+jawaban4.1 no.3
+
+SELECT pesanan.id AS id, pesanan.tanggal AS tanggal, pesanan.total AS total, pelanggan.nama AS nama, produk.kode AS kode, produk.nama AS nama, jenis_produk.nama AS nama, pesanan_items.qty AS qty, pesanan_items.harga AS harga_jual FROM pesanan INNER JOIN pelanggan ON pesanan.pelanggan_id = pelanggan.id INNER JOIN pesanan_items ON pesanan.id = pesanan_items.pesanan_id INNER JOIN produk ON pesanan_items.produk_id = produk.id INNER JOIN jenis_produk ON produk.jenis_produk_id = jenis_produk.id;
++----+------------+---------+--------------------+------+-------------------+-------------+------+------------+
+| id | tanggal    | total   | nama               | kode | nama              | nama        | qty  | harga_jual |
++----+------------+---------+--------------------+------+-------------------+-------------+------+------------+
+|  1 | 2015-11-04 | 9720000 | Agung Sedayu Group | TV01 | Televisi 21 inchs | elektroniks |    1 |    5040000 |
+|  1 | 2015-11-04 | 9720000 | Agung Sedayu Group | K001 | Kulkas 2 pintu    | elektroniks |    1 |    4680000 |
+|  2 | 2015-11-04 |   17500 | Sekar Mirah        | TK01 | Teh Kotak         | minuman     |    5 |       3500 |
+|  3 | 2015-11-04 |       0 | Gayatri Dwi        | TK01 | Teh Kotak         | minuman     |   10 |       3500 |
+|  3 | 2015-11-04 |       0 | Gayatri Dwi        | TV01 | Televisi 21 inchs | elektroniks |    1 |    5040000 |
+|  5 | 2015-11-04 |       0 | Cassanndra         | TK01 | Teh Kotak         | minuman     |   10 |       3500 |
+|  6 | 2015-11-04 |       0 | Pandan Wangi       | TK01 | Teh Kotak         | minuman     |   20 |       3500 |
++----+------------+---------+--------------------+------+-------------------+-------------+------+------------+
+7 rows in set (0.379 sec)
+
+jawaban4.2 no.3
+
+MariaDB [dbpost_sib6]> CREATE VIEW tugas42_3 AS
+    -> SELECT
+    ->     pesanan.id AS id,
+    ->     pesanan.tanggal AS tanggal,
+    ->     pesanan.total AS total,
+    ->     pelanggan.nama AS nama_pelanggan,
+    ->     produk.kode AS kode_produk,
+    ->     produk.nama AS nama_produk,
+    ->     jenis_produk.nama AS jenis_produk,
+    ->     pesanan_items.qty AS qty,
+    ->     pesanan_items.harga AS harga_jual
+    -> FROM
+    ->     pesanan
+    -> INNER JOIN
+    ->     pelanggan ON pesanan.pelanggan_id = pelanggan.id
+    -> INNER JOIN
+    ->     pesanan_items ON pesanan.id = pesanan_items.pesanan_id
+    -> INNER JOIN
+    ->     produk ON pesanan_items.produk_id = produk.id
+    -> INNER JOIN
+    ->     jenis_produk ON produk.jenis_produk_id = jenis_produk.id;
+Query OK, 0 rows affected (0.170 sec)
+
+MariaDB [dbpost_sib6]> select*from tugas42_3;
++----+------------+---------+--------------------+-------------+-------------------+--------------+------+------------+
+| id | tanggal    | total   | nama_pelanggan     | kode_produk | nama_produk       | jenis_produk | qty  | harga_jual |
++----+------------+---------+--------------------+-------------+-------------------+--------------+------+------------+
+|  1 | 2015-11-04 | 9720000 | Agung Sedayu Group | TV01        | Televisi 21 inchs | elektroniks  |    1 |    5040000 |
+|  1 | 2015-11-04 | 9720000 | Agung Sedayu Group | K001        | Kulkas 2 pintu    | elektroniks  |    1 |    4680000 |
+|  2 | 2015-11-04 |   17500 | Sekar Mirah        | TK01        | Teh Kotak         | minuman      |    5 |       3500 |
+|  3 | 2015-11-04 |       0 | Gayatri Dwi        | TK01        | Teh Kotak         | minuman      |   10 |       3500 |
+|  3 | 2015-11-04 |       0 | Gayatri Dwi        | TV01        | Televisi 21 inchs | elektroniks  |    1 |    5040000 |
+|  5 | 2015-11-04 |       0 | Cassanndra         | TK01        | Teh Kotak         | minuman      |   10 |       3500 |
+|  6 | 2015-11-04 |       0 | Pandan Wangi       | TK01        | Teh Kotak         | minuman      |   20 |       3500 |
++----+------------+---------+--------------------+-------------+-------------------+--------------+------+------------+
+7 rows in set (0.026 sec)
+
+jawaban4.3 no_1
+
+insert into produk values ('','THU111','tahu tek',10000,11000,10,1,'','tahutek adalah makanan kacang',3);
+Query OK, 1 row affected, 1 warning (0.053 sec)
+
+MariaDB [dbpost_sib6]> insert into produk values ('','THU112','dogado',10000,11000,10,1,'','dogado adalah makanan kacang',3);
+Query OK, 1 row affected, 1 warning (0.043 sec)
+
+MariaDB [dbpost_sib6]> insert into produk values ('','THU113','somay',13000,15000,10,1,'','somay adalah makanan kacang',3);
+Query OK, 1 row affected, 1 warning (0.001 sec)
+
+MariaDB [dbpost_sib6]> update produk set stok=20 where id=30;
+Query OK, 1 row affected (0.233 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpost_sib6]> savepoint update_produk;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [dbpost_sib6]> delete from pembayaran where id=1;
+Query OK, 1 row affected (0.308 sec)
+
+MariaDB [dbpost_sib6]> rollback to update_produk;
+Query OK, 0 rows affected (0.072 sec)
+
+MariaDB [dbpost_sib6]> rollback;
+Query OK, 0 rowMariaDB [dbpost_sib6]> update kartu set iuran=200000 where id=1;
+Query OK, 1 row affected (0.058 sec)
+Rows matched: 1  Changed: 1  Warnings: 0s affected (0.056 sec)
+
+MariaDB [dbpost_sib6]> commit;
+Query OK, 0 rows affected (0.000 sec)
+
+no_2
+
+>> Saat yang tepat untuk menggunakan LOCK TABLES READ adalah ketika Anda ingin memastikan konsistensi data ketika membaca data dari tabel-tabel yang mungkin sedang diubah oleh operasi tulis di sesi lain. Ini membantu mencegah pembacaan data yang tidak konsisten ketika data sedang diubah secara bersamaan oleh transaksi lain.
+>> Saat yang tepat untuk menggunakan LOCK TABLES WRITE adalah ketika Anda ingin memastikan eksklusivitas akses ke tabel-tabel tersebut, sehingga tidak ada sesi lain yang bisa menulis atau membaca dari tabel tersebut sampai kunci dilepaskan.
+
+
